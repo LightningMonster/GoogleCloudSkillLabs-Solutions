@@ -228,3 +228,68 @@ SELECT
   (POW(last_day_cases / first_day_cases, 1.0 / days_diff) - 1) AS cdgr
 FROM
   summary;
+
+-----------------------------------------------------------------------------------
+
+Task 10:
+
+1. Open Looker Studio
+
+    Go to https://lookerstudio.google.com/
+    Click “Blank Report” ➜ Authorize if asked.
+
+2. Add Data Source
+
+    Click “Add data” → Choose BigQuery
+    Authorize with your Qwiklabs Google Account
+    Under Project, select:
+    qwiklabs-gcp-02-xxxxxxxxxxxxx
+    Then select Custom Query (instead of selecting a table).
+
+3. Paste the SQL Query
+
+    Paste this query:
+
+    SELECT
+    date,
+    SUM(cumulative_confirmed) AS confirmed_cases,
+    SUM(cumulative_deceased) AS deaths
+    FROM
+    `bigquery-public-data.covid19_open_data.covid19_open_data`
+    WHERE
+    country_name = 'United States'
+    AND date BETWEEN '2020-03-26' AND '2020-04-17'
+    GROUP BY
+    date
+    ORDER BY
+    date;
+
+    Then click:
+    “Add”
+
+    When prompted ➜ “Add to report”
+
+4. Create the Charts
+
+    Once data loads:
+    Click Insert → Time Series Chart
+
+    Set:
+    Dimension: date
+    Metric 1: confirmed_cases
+    Metric 2: deaths
+
+    You’ll now see both curves plotted against time.
+
+5. Adjust Filters
+
+    (Optional)
+    Use the date range control to ensure it’s fixed between 2020-03-26 and 2020-04-17.
+
+6. Finalize and Save
+
+    Rename your report:
+    COVID-19 US Cases and Deaths Report
+
+    Click File → Save
+
